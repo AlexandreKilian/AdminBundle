@@ -1,0 +1,8 @@
+.bx_control{
+  position: absolute;
+  z-index: 999;
+}
+
+.bx_control.update{
+  margin-left: 30px;
+}

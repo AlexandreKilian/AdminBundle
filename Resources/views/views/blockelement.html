@@ -1,0 +1,4 @@
+<ng ng-switch on="element.element_type">
+  <ng ng-switch-when="block"><childblock blockid="{{element.id}}"></childblock></ng>
+  <ng ng-switch-when="widget"><widget widgetid="{{element.id}}" typeid="{{element.type.id}}" ></widget></ng>
+</ng>

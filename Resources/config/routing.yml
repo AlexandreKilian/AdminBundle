@@ -1,0 +1,72 @@
+brix_admin_page_get_types:
+  path: /brixadmin/page/types
+  defaults: { _controller: BrixAdminBundle:Page:getPageTypes }
+  methods: [GET]
+brix_admin_page_get:
+  path: /brixadmin/page/{id}
+  defaults: { _controller: BrixAdminBundle:Page:getPage}
+  methods: [GET]
+
+brix_admin_page_get_tree:
+  path: /brixadmin/pages
+  defaults: { _controller: BrixAdminBundle:Page:getPageTree}
+  methods: [GET]
+
+brix_admin_page_set:
+  path: /brixadmin/page/{id}
+  defaults: { _controller: BrixAdminBundle:Page:setPage, id: false}
+  methods: [POST]
+
+
+
+brix_admin_block_get:
+    path:     /brixadmin/block/{id}
+    defaults: { _controller: BrixAdminBundle:Block:getBlock }
+    methods: [GET]
+
+brix_admin_block_set:
+    path:     /brixadmin/block/{id}
+    defaults: { _controller: BrixAdminBundle:Block:setBlock }
+    methods: [POST]
+
+brix_admin_block_add_widget:
+    path:     /brixadmin/block/{id}/add
+    defaults: { _controller: BrixAdminBundle:Block:addWidget }
+    methods: [PUT]
+
+
+brix_admin_block_remove_widget:
+    path:     /brixadmin/block/{id}/remove
+    defaults: { _controller: BrixAdminBundle:Block:removeWidget }
+    methods: [POST]
+
+brix_admin_block_get_types:
+    path:     /brixadmin/block/{id}/types
+    defaults: { _controller: BrixAdminBundle:Block:getTypes }
+    methods: [GET]
+
+brix_admin_widget_template_get:
+    path: /brixadmin/template/{id}
+    defaults: {_controller: BrixAdminBundle:Widget:getTemplate, id: false }
+    methods: [GET]
+
+brix_admin_widget_get_entity:
+    path:     /brixadmin/widget/{id}/entity
+    defaults: { _controller: BrixAdminBundle:Widget:getEntity }
+    methods: [GET]
+
+brix_admin_widget_set_entity:
+    path:     /brixadmin/widget/{id}/entity
+    defaults: { _controller: BrixAdminBundle:Widget:setEntity }
+    methods: [POST]
+
+
+brix_admin_widget_get:
+    path:     /brixadmin/widget/{id}
+    defaults: { _controller: BrixAdminBundle:Widget:getWidget }
+    methods: [GET]
+
+brix_admin_widget_set:
+    path:     /brixadmin/widget/{id}
+    defaults: { _controller: BrixAdminBundle:Widget:setWidget, id: false }
+    methods: [POST]
