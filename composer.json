@@ -1,6 +1,6 @@
 
 {
-	"name": "brix/cms-admin-bundle",
+	"name": "brix/admin-bundle",
 	"type": "symfony-bundle",
 	"description": "The admin bundle for the brix cms",
 	"keywords": ["brix","cms", "core","symfony","admin"],
