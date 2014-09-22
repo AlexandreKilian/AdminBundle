@@ -24,6 +24,6 @@
 		}
 	},
 	"autoload": {
-		"psr-0": { "Brix\\BrixAdminBundle": "" }
+		"psr-0": { "Brix\\AdminBundle": "" }
 	}
 }
