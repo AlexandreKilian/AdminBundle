@@ -3,11 +3,13 @@
   '@BrixAdminBundle/Resources/public/bower_components/jquery/dist/jquery.js'
   '@BrixAdminBundle/Resources/public/bower_components/jquery-ui/jquery-ui.js'
   '@BrixAdminBundle/Resources/public/bower_components/medium-editor/dist/js/medium-editor.js'
+  '@BrixAdminBundle/Resources/public/bower_components/angular-file-upload/dist/angular-file-upload-html5-shim.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular/angular.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-resource/angular-resource.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-sanitize/angular-sanitize.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-slugify/angular-slugify.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-bootstrap/ui-bootstrap.js'
+  '@BrixAdminBundle/Resources/public/bower_components/angular-file-upload/dist/angular-file-upload.js'
   '@BrixAdminBundle/Resources/public/bower_components/ng-context-menu/dist/ng-context-menu.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-contenteditable/angular-contenteditable.js'
@@ -20,6 +22,7 @@
   <script>
   window.brix = {};
   window.brix.routing = {};
+  window.brix.routing.media_upload = '{{path('brix_admin_media_upload')}}';
   window.brix.routing.page = '{{path('brix_admin_page_get',{id:':id'})}}';
   window.brix.routing.page_tree = '{{path('brix_admin_page_get_tree')}}';
   window.brix.routing.page_types = '{{path('brix_admin_page_get_types')}}';
@@ -103,6 +106,23 @@
     <button class="btn btn-primary" ng-click="ok()">OK</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
     </div>
+    </script>
+    {% endverbatim %}
+    {% verbatim %}
+    <script type="text/ng-template" id="mediaGalleryModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Media Gallery</h3>
+    </div>
+    <div class="modal-body">
+      Upload
+      <input type="file" ng-file-select="onFileSelect($files)">
+      Or
+      <div ng-file-drop="onFileSelect($files)" class="dropArea" ng-file-drag-over-class="over">drop files here</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">OK</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+      </div>
     </script>
     {% endverbatim %}
     {% verbatim %}

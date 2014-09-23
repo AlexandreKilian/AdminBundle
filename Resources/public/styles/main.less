@@ -11,7 +11,22 @@
   position: fixed;
   z-index: 999;
 }
-
+.bx_drag_area{
+  display: inline-block;
+  border: solid 1px @bgcolor;
+  &.over{
+    border-color: @themecolor;
+  }
+}
+.dropArea{
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: solid 1px @bgcolor;
+  &.over{
+    border-color: @themecolor;
+  }
+}
 .dropdown{
   display: inline-block;
 }

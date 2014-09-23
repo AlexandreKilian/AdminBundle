@@ -19,6 +19,18 @@ brix_admin_page_set:
 
 
 
+brix_admin_media_get:
+  path: /brixadmin/media
+  defaults: { _controller: BrixAdminBundle:Media:get }
+  methods: [GET]
+brix_admin_media_upload:
+  path: /brixadmin/media
+  defaults: { _controller: BrixAdminBundle:Media:upload }
+  methods: [POST]
+
+
+
+
 brix_admin_block_get:
     path:     /brixadmin/block/{id}
     defaults: { _controller: BrixAdminBundle:Block:getBlock }

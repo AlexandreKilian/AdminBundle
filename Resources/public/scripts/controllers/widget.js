@@ -8,7 +8,7 @@
  * Controller of the angularApp
  */
 angular.module('angularApp')
-  .controller('WidgetCtrl', [ '$scope','$rootScope', 'Entity', function ($scope, $rootScope, Entity) {
+  .controller('WidgetCtrl', [ '$scope','$rootScope','$timeout','$modal','$upload', 'Entity', function ($scope, $rootScope,$timeout, $modal,$upload, Entity) {
 
     $scope.typeid;
     $scope.widgetid;
@@ -47,6 +47,44 @@ angular.module('angularApp')
       $scope.widget = entity;
     };
 
+    $scope.onFileSelect = function($files,field) {
+      for (var i = 0; i < $files.length; i++) {
+      var file = $files[i];
+      $scope.upload = $upload.upload({
+        url: window.brix.routing.media_upload,
+        file: file
+        }).progress(function(evt){
+          console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+        }).success(function(data, status, headers, config) {
+        // file is uploaded successfully
+          // $scope.widget[field] = data;
+
+          $timeout(function(){
+              $scope.$apply(function(){
+                $scope.widget[field] = data;
+                $scope.saveEntity();
+              });
+          })
+
+      });
+    }
+  };
+
+
+    $scope.openMediaGallery = function(field){
+      var modalInstance = $modal.open({
+        templateUrl: 'mediaGalleryModal.html',
+        controller: 'mediaGallery',
+        resolve: {
+        }
+
+      });
+      modalInstance.result.then(function () {
+        }, function () {
+      });
+
+    }
+
     $scope.switchToEdit = function(){
       $rootScope.$broadcast('toggleMode',{editMode: true});
     }
@@ -56,6 +94,10 @@ angular.module('angularApp')
       var entity = {};
       for(var i in $scope.widget){
         if(i == "id")continue;//Don't send the ID, It's not part of the Form
+        if(typeof $scope.widget[i] ==='object'){
+          entity[i] = $scope.widget[i].id;
+          continue;
+        }
         entity[i] = $scope.widget[i];
       }
       Entity.set({id: $scope.widgetid},entity).$promise.then(updateEntity);

@@ -24,7 +24,8 @@ angular
     'angular-medium-editor',
     'brixServices',
     'slugifier',
-   'ng-context-menu'
+    'ng-context-menu',
+    'angularFileUpload'
   ])
   .config(function ($sceDelegateProvider) {
 
