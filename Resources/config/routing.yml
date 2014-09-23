@@ -20,9 +20,10 @@ brix_admin_page_set:
 
 
 brix_admin_media_get:
-  path: /brixadmin/media
-  defaults: { _controller: BrixAdminBundle:Media:get }
+  path: /brixadmin/media/{page}
+  defaults: { _controller: BrixAdminBundle:Media:get, page:1 }
   methods: [GET]
+
 brix_admin_media_upload:
   path: /brixadmin/media
   defaults: { _controller: BrixAdminBundle:Media:upload }

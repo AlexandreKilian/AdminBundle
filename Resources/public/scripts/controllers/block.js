@@ -20,14 +20,7 @@ angular.module('angularApp')
   $scope.editMode = false;
   $scope.previewMode = true;
 
-  $rootScope.$on('toggleMode',function(evt,args){
-    $scope.editMode = args.editMode;
-    $scope.previewMode = args.previewMode;
-  });
 
-  $rootScope.$on('ngRightClick', function(evt,args){
-    rClickEvent = args.event;
-  });
 
   $scope.openElementOptions = function(id){
     $scope.showOptions = true;
@@ -95,11 +88,6 @@ angular.module('angularApp')
     revert: false
   };
 
-  $rootScope.$on('saveBlockElement',function(evt,data){
-    if(data.id == $scope.id){
-      $scope.block.children[data.index] = data.element;
-    }
-  });
 
   var load = function(){
     Block.get({id:$scope.id}).$promise.then(function(block){
@@ -133,6 +121,20 @@ angular.module('angularApp')
       return true;
     }
   };
+
+  $rootScope.$on('saveBlockElement',function(evt,data){
+    if(data.id == $scope.id){
+      $scope.block.children[data.index] = data.element;
+    }
+  });
+  $rootScope.$on('toggleMode',function(evt,args){
+    $scope.editMode = args.editMode;
+    $scope.previewMode = args.previewMode;
+  });
+
+  $rootScope.$on('ngRightClick', function(evt,args){
+    rClickEvent = args.event;
+  });
 
   init();
 

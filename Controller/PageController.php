@@ -15,6 +15,10 @@ class PageController extends Controller
 {
 
 
+  public function newPageAction($url = null){
+    return $this->render('BrixAdminBundle:Default:createPage.html.twig',array('url'=>$url,"page"=>null));
+  }
+
   public function getPageTreeAction(){
     $em = $this->getDoctrine()->getManager();
     if($pages = $em->getRepository('BrixCoreBundle:Page')->findBy(array('parent'=>null))){

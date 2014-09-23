@@ -1,0 +1,4 @@
+{% verbatim %}
+<li style="padding-left:{{page.level*10}}px"><a ng-click="selectParentPage(page)">{{page.name}}</a></li>
+<ng ng-repeat="page in page.children" ng-include="'page_tree.html'"></ng>
+{% endverbatim %}

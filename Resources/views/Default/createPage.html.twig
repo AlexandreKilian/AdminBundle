@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>404 - Page not found</title>
+  {{ render(controller('BrixAdminBundle:Security:adminHeader')) }}
+</head>
+
+<body ng-app="angularApp" ng-controller="pageCtrl" ng-class="{brixadmin_hidden: hideAdminBar}" class="forofour">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="error-template">
+          <h1>
+            Oops!</h1>
+            <h2>
+              404 Not Found</h2>
+              <div class="error-details">
+                Sorry, an error has occured, Requested page not found!
+              </div>
+              <div class="error-actions">
+                <a class="btn btn-brix btn-lg" ng-click="createPage('{{url}}')">Create Page</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        {{ render(controller('BrixAdminBundle:Security:adminFooter')) }}
+      </body>
+
+      </html>

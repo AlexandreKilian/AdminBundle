@@ -1,0 +1,28 @@
+{% verbatim %}
+<div class="modal-header">
+    <h3 class="modal-title">Media Gallery</h3>
+</div>
+<div class="modal-body">
+    Upload
+    <input type="file" ng-file-select="onFileSelect($files)">
+    Or
+    <div ng-file-drop="onFileSelect($files)" class="dropArea" ng-file-drag-over-class="over">drop files here</div>
+    Or select from one of these:
+    <div class="bx-media-gallery clearfix">
+        <div class="bx-media-element" ng-repeat="image in media | orderBy:image.id:reverse">
+            <img ng-src="{{image.url}}" ng-click="selectMedia($index)">
+        </div>
+
+    </div>
+    <ul class="pagination">
+        <li ng-class="{true:'disabled'}[page == 1]"><a href="#" ng-click="previousPage()">&laquo;</a></li>
+        <li ng-class="{true:'disabled'}[end]"><a href="#" ng-click="nextPage()">&raquo;</a></li>
+    </ul>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+{% endverbatim %}

@@ -23,6 +23,7 @@
   window.brix = {};
   window.brix.routing = {};
   window.brix.routing.media_upload = '{{path('brix_admin_media_upload')}}';
+  window.brix.routing.media_get = '{{path('brix_admin_media_get',{page:':page'})}}';
   window.brix.routing.page = '{{path('brix_admin_page_get',{id:':id'})}}';
   window.brix.routing.page_tree = '{{path('brix_admin_page_get_tree')}}';
   window.brix.routing.page_types = '{{path('brix_admin_page_get_types')}}';
@@ -45,22 +46,7 @@
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
-    <div id="brixAdminBar" class="brix" ng-class="{brixadmin_hidden: hideAdminBar}">
-      <ul>
-        <li class="highlight pull-left logo" ng-click="toggleHide()"><a>BRIX</a></li>
-        <li class="pull-left"><a class="media" title="media"></a></li>
-        <li class="pull-left" ng-click="contentManager()"><a class="document" title="Content"></a></li>
-        <!-- <li class="pull-left"><a class="schedule" title="schedule"></a></li> -->
-        <li class="pull-left" ng-hide="new" ng-click="pageOptions()"><a class="edit" title="edit"></a></li>
-        <li class="pull-left" ng-click="newPageOptions()"><a class="add" title="Add"></a></li>
-        <li class="highlight pull-right" ng-hide="editMode" ng-click="toggleEdit()"><a class="text-icon edit">Edit</a></li>
-
-        <li class="highlight pull-right" ng-click="save()" ng-show="editMode"><a class=" text-icon save">Publish</a></li>
-        <li class="pull-right" ng-click="reset()" ng-show="editMode"><a class="text-icon cancel">Cancel</a></li>
-        <li class="pull-right" ng-click="togglePreview()"><a class="preview" ng-class="{true:'active'}[previewMode]" title="Preview"></a></li>
-        {# <li class="pull-right" data-drop="true"><a class="text-icon"> Trash</a></li> #}
-      </ul>
-    </div>
+    {% include 'BrixAdminBundle:Default:adminBar.html.twig' %}
 
     {# <div id="brixAdminSidebar" ng-class="{true:'active'}[showElementOptions]">
       <div class="col-xs-6"><button class="btn btn-warning">delete</button></div><div class="col-xs-6"><button class="btn btn-success" ng-click="saveOptions()">save</button></div>
@@ -69,67 +55,18 @@
         <label>Position</label><input type="text" ng-model="element.order">
       </div>
     </div> #}
-    {% verbatim %}
+
+
     <script type="text/ng-template" id="pageSettingsModal.html">
-    <div class="modal-header">
-    <h3 class="modal-title"><span ng-switch="new"><span ng-switch-when="true">Create</span><span ng-switch-when="false">Edit</span></span> Page</h3>
-    </div>
-    <div class="modal-body">
-    <form role="form">
-    <div class="form-group">
-    <label>Name</label>
-    <input ng-model="page.name" class="form-control">
-    </div>
-    <div class="form-group">
-    <label>URL</label>
-    /<input ng-model="page.url" class="form-control">
-    </div>
-    <div class="form-group">
-    <label>Type</label>
-    <select ng-model="page.type" class="form-control">
-    <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option>
-    </select>
-    </div>
-    <div class="form-group">
-    <label>Parent</label>
-    <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-    {{page.parent.name}}
-    <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1"><li ng-repeat="element in tree" ng-include="'page_tree.html'" ng-init="page = element"></li>
-    </ul>
-    </div>
-    </form>
-    </div>
-    <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-    </div>
+    {% include 'BrixAdminBundle:Page:pageSettingsModal.html.twig' %}
     </script>
-    {% endverbatim %}
-    {% verbatim %}
+
     <script type="text/ng-template" id="mediaGalleryModal.html">
-    <div class="modal-header">
-      <h3 class="modal-title">Media Gallery</h3>
-    </div>
-    <div class="modal-body">
-      Upload
-      <input type="file" ng-file-select="onFileSelect($files)">
-      Or
-      <div ng-file-drop="onFileSelect($files)" class="dropArea" ng-file-drag-over-class="over">drop files here</div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="ok()">OK</button>
-        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-      </div>
+    {% include 'BrixAdminBundle:Media:mediaGalleryModal.html.twig' %}
     </script>
-    {% endverbatim %}
-    {% verbatim %}
 
     <script type="text/ng-template"  id="page_tree.html">
-    <span ng-click="selectParentPage(page)">{{page.name}}</span></li>
-    <li ng-repeat="page in page.children" ng-include="'page_tree.html'"></li>
+    {% include 'BrixAdminBundle:Page:tree.html.twig' %}
     </script>
     <script type="text/ng-template" id="contentModal.html">
     <div class="modal-header">
@@ -149,39 +86,5 @@
     </script>
 
     <script type="text/ng-template" id="block.html">
-    <ng ng-class="{blockcontainer:!editMode,preview:previewMode}">
-      <span ng-hide="editMode" class="blocklabel">{{block.name}}</span>
-      <span class="blockelementwrapper" ng-repeat="child in block.children track by child.id" context-menu data-target="menu-{{$index}}">
-        <div class="dropdown position-fixed" id="menu-{{ $index }}">
-          <ul class="dropdown-menu" role="menu">
-            <li>
-              <a class="pointer" role="menuitem" tabindex="1"
-              ng-click="moveUp($index)" ng-hide="$first">
-              Move Up
-            </a>
-          </li>
-          <li>
-            <a class="pointer" role="menuitem" tabindex="1"  ng-hide="$last"
-            ng-click="moveDown($index)">
-            Move Down
-          </a>
-        </li>
-        <li>
-          <a class="pointer" role="menuitem" tabindex="1"
-          ng-click="delete($index)">
-          Remove
-        </a>
-      </li>
-    </ul></div>
-    <blockelement element="child" ng-model="block" ng-click="blockElementOptions($index)"></blockelement></span>
-    <div class="dropdown" ng-hide="editMode || previewMode">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu{{id}}" data-toggle="dropdown">
-      Add Widget
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu{{id}}">
-      <li role="presentation"ng-repeat="type in widgetTypes"><a role="menuitem" tabindex="-1" ng-click="addWidget(type.id)">{{type.name}}</a></li>
-    </ul>
-  </div>
-  </script>
-  {% endverbatim %}
+    {% include 'BrixAdminBundle:Default:block.html.twig' %}
+    </script>

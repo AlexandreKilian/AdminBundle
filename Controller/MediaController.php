@@ -12,11 +12,28 @@ use Brix\CoreBundle\Entity\Media;
 
 class MediaController extends Controller
 {
-    public function getAction()
+    public function getAction($page)
     {
-        return array(
-                // ...
-            );    }
+        $limit = 20;
+        $first = ($page - 1) * $limit;
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('BrixCoreBundle:Media');
+        $serializer = $this->get('jms_serializer');
+
+        $qb = $repository->createQueryBuilder('m')
+                         ->orderBy('m.id','DESC')
+                         ->setFirstResult($first)
+                         ->setMaxResults($limit)
+                         ;
+        $media = $qb->getQuery()->getResult();
+
+        $data = $serializer->serialize($media,'json');
+        return new Response($data,200, array('Content-Type' => 'application/json'));
+
+    }
+
+
+
 
     public function uploadAction(Request $request)
     {

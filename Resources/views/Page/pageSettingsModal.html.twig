@@ -1,0 +1,37 @@
+{% verbatim %}
+<div class="modal-header">
+  <h3 class="modal-title"><span ng-switch="new"><span ng-switch-when="true">Create</span><span ng-switch-when="false">Edit</span></span> Page</h3>
+</div>
+<div class="modal-body">
+  <form role="form">
+    <div class="form-group">
+      <label>Name</label>
+      <input ng-model="page.name" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>URL</label>
+      /<input ng-model="page.url" class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select ng-model="page.type" class="form-control">
+        <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Parent</label>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+        {{page.parent.name}}
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu page-parent-dropdown" role="menu" aria-labelledby="dropdownMenu1"><ng ng-repeat="element in tree" ng-include="'page_tree.html'" ng-init="page = element"></ng>
+      </ul>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+{% endverbatim %}

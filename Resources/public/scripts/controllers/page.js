@@ -36,17 +36,28 @@ angular.module('angularApp')
     toggleMode();
   }
 
-
-
   $rootScope.$on('editBlockElement',function(evt,data){
     openElementOptions(data);
   });
-
 
   $scope.saveOptions = function(data){
     editElement.element = $scope.element;
     $rootScope.$broadcast('saveBlockElement',editElement);
     editElement = {};
+  }
+
+
+  $scope.openMediaGallery = function(field){
+      var modalInstance = $modal.open({
+          templateUrl: 'mediaGalleryModal.html',
+          controller: 'mediaGallery',
+          resolve: {
+          }
+
+      });
+      modalInstance.result.then(function (media) {
+      });
+
   }
 
 
@@ -111,13 +122,18 @@ angular.module('angularApp')
 
   };
 
-  $scope.newPageOptions = function(){
+
+  $scope.createPage = function(url){
+    $scope.newPageOptions(url)
+  }
+
+  $scope.newPageOptions = function(url){
     var modalInstance = $modal.open({
       templateUrl: 'pageSettingsModal.html',
       controller: 'pageOptionsCtrl',
       resolve: {
         element: function(){
-          return {};
+          return {url: url};
         },
         isNew: function(){
           return true;
