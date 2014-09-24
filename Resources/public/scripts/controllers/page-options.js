@@ -23,6 +23,13 @@ angular.module('angularApp')
     }
 
   });
+  $scope.$watch('page.original',function(newOriginal,oldOriginal){
+      if(newOriginal != undefined && (oldOriginal == undefined || newOriginal.id != oldOriginal.id)){
+          $scope.page.url = newOriginal.url;
+          $scope.page.name = newOriginal.name;
+      }
+
+  });
 
   var buildTree = function(pages){
       for(var i in pages){
