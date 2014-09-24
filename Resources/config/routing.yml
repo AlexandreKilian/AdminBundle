@@ -1,3 +1,8 @@
+brix_admin_languages_get:
+    path: /brixadmin/languages
+    defaults: { _controller: BrixAdminBundle:Page:getLanguages }
+    methods: [GET]
+
 brix_admin_page_get_types:
   path: /brixadmin/page/types
   defaults: { _controller: BrixAdminBundle:Page:getPageTypes }
@@ -5,6 +10,10 @@ brix_admin_page_get_types:
 brix_admin_page_get:
   path: /brixadmin/page/{id}
   defaults: { _controller: BrixAdminBundle:Page:getPage}
+  methods: [GET]
+brix_admin_page_translations:
+  path: /brixadmin/page/{id}/translations
+  defaults: { _controller: BrixAdminBundle:Page:getTranslations}
   methods: [GET]
 
 brix_admin_page_get_tree:

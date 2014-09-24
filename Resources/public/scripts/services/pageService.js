@@ -17,6 +17,11 @@ angular.module('brixServices')
         method: 'POST',
         headers : {'Content-Type': 'application/x-www-form-urlencoded'}
       },
+      getTranslations: {
+          method: 'GET',
+          url: window.brix.routing.page_translations,
+          isArray: true
+      },
       getTypes: {
         url: window.brix.routing.page_types,
         method: 'GET',
@@ -27,6 +32,6 @@ angular.module('brixServices')
         url: window.brix.routing.page_tree,
         method: 'GET',
         isArray: true
-      }
+    }
     });
   }]);

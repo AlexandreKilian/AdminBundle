@@ -1,7 +1,6 @@
 <!-- Brix Admin Vendors -->
 {% javascripts
   '@BrixAdminBundle/Resources/public/bower_components/jquery/dist/jquery.js'
-  '@BrixAdminBundle/Resources/public/bower_components/jquery-ui/jquery-ui.js'
   '@BrixAdminBundle/Resources/public/bower_components/medium-editor/dist/js/medium-editor.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-file-upload/dist/angular-file-upload-html5-shim.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular/angular.js'
@@ -13,8 +12,6 @@
   '@BrixAdminBundle/Resources/public/bower_components/ng-context-menu/dist/ng-context-menu.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
   '@BrixAdminBundle/Resources/public/bower_components/angular-contenteditable/angular-contenteditable.js'
-  '@BrixAdminBundle/Resources/public/bower_components/angular-dragdrop/src/angular-dragdrop.js'
-  '@BrixAdminBundle/Resources/public/bower_components/angular-ui-sortable/sortable.min.js'
   %}
   <script type="text/javascript" src="{{ asset_url }}"></script>
   {% endjavascripts %}
@@ -24,7 +21,9 @@
   window.brix.routing = {};
   window.brix.routing.media_upload = '{{path('brix_admin_media_upload')}}';
   window.brix.routing.media_get = '{{path('brix_admin_media_get',{page:':page'})}}';
+  window.brix.routing.languages = '{{path('brix_admin_languages_get')}}';
   window.brix.routing.page = '{{path('brix_admin_page_get',{id:':id'})}}';
+  window.brix.routing.page_translations = '{{path('brix_admin_page_translations',{id:':id'})}}';
   window.brix.routing.page_tree = '{{path('brix_admin_page_get_tree')}}';
   window.brix.routing.page_types = '{{path('brix_admin_page_get_types')}}';
   window.brix.routing.block = '{{path('brix_admin_block_get',{id:':id'})}}';

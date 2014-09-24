@@ -1,37 +1,63 @@
 {% verbatim %}
 <div class="modal-header">
-  <h3 class="modal-title"><span ng-switch="new"><span ng-switch-when="true">Create</span><span ng-switch-when="false">Edit</span></span> Page</h3>
+    <h3 class="modal-title"><span ng-switch="new"><span ng-switch-when="true">Create</span><span ng-switch-when="false">Edit</span></span> Page</h3>
 </div>
 <div class="modal-body">
-  <form role="form">
-    <div class="form-group">
-      <label>Name</label>
-      <input ng-model="page.name" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>URL</label>
-      /<input ng-model="page.url" class="form-control">
-    </div>
-    <div class="form-group">
-      <label>Type</label>
-      <select ng-model="page.type" class="form-control">
-        <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Parent</label>
-      <div class="dropdown">
-        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-        {{page.parent.name}}
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu page-parent-dropdown" role="menu" aria-labelledby="dropdownMenu1"><ng ng-repeat="element in tree" ng-include="'page_tree.html'" ng-init="page = element"></ng>
-      </ul>
-    </div>
-  </form>
+    <form role="form">
+        <div class="form-group">
+            <label>Name</label>
+            <input ng-model="page.name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>URL</label>
+            /<input ng-model="page.url" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <select ng-model="page.type" class="form-control">
+                <option ng-repeat="type in types" value="{{type.id}}">{{type.name}}</option>
+            </select>
+        </div>
+        <div class="form-group" ng-show="new">
+            <label>Translation for</label>
+            <select ng-model="page.original" class="form-control" ng-options="element.displayname for element in tree">
+            </select>
+        </div>
+        <div class="form-group" ng-show="new && page.original">
+            <label>Language</label>
+            <select ng-model="page.language" class="form-control" ng-options="language.name for language in languages">
+            </select>
+        </div>
+        <div class="form-group" ng-hide="page.original">
+            <label>Parent</label>
+            <select ng-model="page.parent" class="form-control" ng-options="element.displayname for element in tree">
+            </select>
+        </div>
+        <div class="form-group" ng-hide="page.original || new">
+            <label>Translations</label>
+            <ul>
+                <li ng-repeat="translation in translations">
+                    <a ng-href="/{{translation.language.locale}}/{{translation.url}}">{{translation.language.name}}</a>
+                </li>
+            </ul>
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Create Translation
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation" ng-repeat="language in languages"><a role="menuitem" tabindex="-1" href="#">{{language.name}}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group" ng-show="page.original && !new">
+            Translation for <a ng-href="/{{page.original.url}}">{{page.original.name}}</a>
+        </div>
+
+    </form>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" ng-click="ok()">OK</button>
-  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>
 {% endverbatim %}

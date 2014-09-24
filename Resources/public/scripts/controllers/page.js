@@ -10,157 +10,184 @@
 angular.module('angularApp')
 .controller('pageCtrl', function ($scope,$rootScope,$timeout,$modal,Page) {
 
-  $scope.pageid = 0;
-  $scope.new = true;
+    $scope.pageid = 0;
+    $scope.new = true;
 
-  $scope.element = {};
+    $scope.element = {};
 
-  $scope.editMode = false;
-  $scope.previewMode = true;
+    $scope.editMode = false;
+    $scope.previewMode = true;
 
-  $scope.showElementOptions = false;
+    $scope.showElementOptions = false;
 
-  var editElement = {};
+    var editElement = {};
 
-  $scope.hideAdminBar = false;
-  var types = Page.getTypes();
-
-
-  $scope.togglePreview = function(){
-    $scope.previewMode = !$scope.previewMode;
-    toggleMode();
-  }
-
-  $scope.toggleEdit = function(){
-    $scope.editMode = !$scope.editMode;
-    toggleMode();
-  }
-
-  $rootScope.$on('editBlockElement',function(evt,data){
-    openElementOptions(data);
-  });
-
-  $scope.saveOptions = function(data){
-    editElement.element = $scope.element;
-    $rootScope.$broadcast('saveBlockElement',editElement);
-    editElement = {};
-  }
+    $scope.hideAdminBar = false;
+    var types = Page.getTypes();
 
 
-  $scope.openMediaGallery = function(field){
-      var modalInstance = $modal.open({
-          templateUrl: 'mediaGalleryModal.html',
-          controller: 'mediaGallery',
-          resolve: {
-          }
+    $scope.togglePreview = function(){
+        $scope.previewMode = !$scope.previewMode;
+        toggleMode();
+    }
 
-      });
-      modalInstance.result.then(function (media) {
-      });
+    $scope.toggleEdit = function(){
+        $scope.editMode = !$scope.editMode;
+        toggleMode();
+    }
 
-  }
-
-
-  $scope.toggleHide = function(){
-    $scope.hideAdminBar = !$scope.hideAdminBar;
-  }
-
-  var toggleMode = function(){
-    $rootScope.$broadcast('toggleMode',{editMode: $scope.editMode,previewMode:$scope.previewMode});
-  }
-
-  $rootScope.$on('toggleMode',function(evt,args){
-    $scope.editMode = args.editMode;
-    $scope.previewMode = args.previewMode;
-  });
-
-  $scope.save = function(){
-    $rootScope.$broadcast('saveWidgets');
-    $scope.toggleEdit();
-  }
-
-  $scope.reset = function(){
-    $rootScope.$broadcast('resetWidgets');
-    $scope.toggleEdit();
-  }
-
-  $scope.contentManager = function(){
-    var modalInstance = $modal.open({
-      templateUrl: 'contentModal.html',
-      controller: 'contentCtrl',
-      resolve: {
-      }
-
+    $rootScope.$on('editBlockElement',function(evt,data){
+        openElementOptions(data);
     });
-  }
 
-  $scope.pageOptions = function(){
-    var modalInstance = $modal.open({
-      templateUrl: 'pageSettingsModal.html',
-      controller: 'pageOptionsCtrl',
-      resolve: {
-        element: function(){
-          return $scope.page;
-        },
-        isNew: function(){
-          return false;
-        },
-        types: function(){
-          return types;
+    $scope.saveOptions = function(data){
+        editElement.element = $scope.element;
+        $rootScope.$broadcast('saveBlockElement',editElement);
+        editElement = {};
+    }
+
+
+    $scope.openMediaGallery = function(field){
+        var modalInstance = $modal.open({
+            templateUrl: 'mediaGalleryModal.html',
+            controller: 'mediaGallery',
+            resolve: {
+            }
+
+        });
+        modalInstance.result.then(function (media) {
+        });
+
+    }
+
+
+    $scope.toggleHide = function(){
+        $scope.hideAdminBar = !$scope.hideAdminBar;
+    }
+
+    var toggleMode = function(){
+        $rootScope.$broadcast('toggleMode',{editMode: $scope.editMode,previewMode:$scope.previewMode});
+    }
+
+    $rootScope.$on('toggleMode',function(evt,args){
+        $scope.editMode = args.editMode;
+        $scope.previewMode = args.previewMode;
+    });
+
+    $scope.save = function(){
+        $rootScope.$broadcast('saveWidgets');
+        $scope.toggleEdit();
+    }
+
+    $scope.reset = function(){
+        $rootScope.$broadcast('resetWidgets');
+        $scope.toggleEdit();
+    }
+
+    $scope.contentManager = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'contentModal.html',
+            controller: 'contentCtrl',
+            resolve: {
+            }
+
+        });
+    }
+
+    $scope.pageOptions = function(){
+        var modalInstance = $modal.open({
+            templateUrl: 'pageSettingsModal.html',
+            controller: 'pageOptionsCtrl',
+            resolve: {
+                element: function(){
+                    return $scope.page;
+                },
+                isNew: function(){
+                    return false;
+                },
+                types: function(){
+                    return types;
+                }
+            }
+
+        });
+        modalInstance.result.then(function (page) {
+            savePage(page);
+        }, function () {
+        });
+
+    };
+
+    function savePage(page){
+
+        var id = page.id;
+
+        for(var i in page){
+            if(i == 'id'){
+                delete page[i];
+                continue;
+
+            }
+            if(typeof page[i] ==='object'){
+                if( page[i].id != undefined){
+                    page[i] = page[i].id;
+                    continue;
+                } else{
+                    delete page[i];
+                }
+            }
+            if(typeof page[i] === 'array'){
+                delete page[i];
+            }
         }
-      }
-
-    });
-    modalInstance.result.then(function (page) {
-      var id = page.id;
-      delete page.id;
-      delete page.blocks;
-      delete page.children;
-      Page.set({id:id},page);
-    }, function () {
-    });
-
-  };
+        // delete page.id;
+        // delete page.blocks;
+        // delete page.children;
+        Page.set({id:id},page).$promise.then(function(data){
+            // $scope.new = false;
+            // $scope.page = data;
+        });
+    }
 
 
-  $scope.createPage = function(url){
-    $scope.newPageOptions(url)
-  }
+    $scope.createPage = function(url){
+        $scope.newPageOptions(url)
+    }
 
-  $scope.newPageOptions = function(url){
-    var modalInstance = $modal.open({
-      templateUrl: 'pageSettingsModal.html',
-      controller: 'pageOptionsCtrl',
-      resolve: {
-        element: function(){
-          return {url: url};
-        },
-        isNew: function(){
-          return true;
-        },
-        types: function(){
-          return types;
-        }
-      }
+    $scope.newPageOptions = function(url){
+        var modalInstance = $modal.open({
+            templateUrl: 'pageSettingsModal.html',
+            controller: 'pageOptionsCtrl',
+            resolve: {
+                element: function(){
+                    return {url: url};
+                },
+                isNew: function(){
+                    return true;
+                },
+                types: function(){
+                    return types;
+                }
+            }
 
-    });
+        });
 
-    modalInstance.result.then(function (page) {
-      Page.set(page);
-    });
-  };
+        modalInstance.result.then(function (page) {
+            savePage(page);
+        });
+    };
 
-  var init = function(){
-    $scope.$watch('pageid',loadPage);
-  }
+    var init = function(){
+        $scope.$watch('pageid',loadPage);
+    }
 
 
 
-  var loadPage = function(pageid){
-    Page.get({id:pageid}).$promise.then(function(page){
-      $scope.new = false;
-      $scope.page = page;
-    });
-  }
-  init();
+    var loadPage = function(pageid){
+        Page.get({id:pageid}).$promise.then(function(page){
+            $scope.new = false;
+            $scope.page = page;
+        });
+    }
+    init();
 });
