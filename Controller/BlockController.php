@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use Brix\CoreBundle\Entity\Widget;
+use Brix\CoreBundle\Entity\Block;
 use Brix\CoreBundle\Forms\WidgetForm;
 use Brix\CoreBundle\Forms\BlockForm;
 
@@ -21,6 +22,14 @@ class BlockController extends Controller
     return new Response($data,200, array('Content-Type' => 'application/json'));
   }
 
+public function getTemplateAction($id){
+
+  $em = $this->getDoctrine()->getManager();
+  if($block = $em->getRepository("BrixCoreBundle:BlockType")->find($id)){
+    return $this->render($block->getTemplate(),array('block'=>$block,'children'=>null,'subblock'=>true,'ngAdmin'=>true));
+  }
+  return new Response("",404, array('Content-Type' => 'application/json'));
+}
 
   public function getTypesAction($id){
     //TODO: Selective Widget Types for each Block;
@@ -94,6 +103,31 @@ class BlockController extends Controller
 
     $serializer = $this->get('jms_serializer');
     $data = $serializer->serialize($widget,'json');
+    return new Response($data,200, array('Content-Type' => 'application/json'));
+
+  }
+
+  public function addBlockAction(Request $request, $id){
+
+
+    $json_data = json_decode($request->getContent());//get the response data
+
+
+    $em = $this->getDoctrine()->getManager();
+
+    $block = $em->getRepository("BrixCoreBundle:Block")->find($id);
+
+    $subblock = new Block();
+    $subblock->setBlock($block);
+    // $widget->setType($type);
+    $subblock->setName($json_data->name);
+    $subblock->setOrder(sizeof($block->getChildren()));
+
+    $em->persist($subblock);
+    $em->flush();
+
+    $serializer = $this->get('jms_serializer');
+    $data = $serializer->serialize($subblock,'json');
     return new Response($data,200, array('Content-Type' => 'application/json'));
 
   }

@@ -46,14 +46,24 @@ brix_admin_block_get:
     defaults: { _controller: BrixAdminBundle:Block:getBlock }
     methods: [GET]
 
+brix_admin_block_get_template:
+    path:     /brixadmin/block/template/{id}
+    defaults: { _controller: BrixAdminBundle:Block:getTemplate, id:'/' }
+    methods: [GET]
+
 brix_admin_block_set:
     path:     /brixadmin/block/{id}
     defaults: { _controller: BrixAdminBundle:Block:setBlock }
     methods: [POST]
 
 brix_admin_block_add_widget:
-    path:     /brixadmin/block/{id}/add
+    path:     /brixadmin/block/{id}/widget/add
     defaults: { _controller: BrixAdminBundle:Block:addWidget }
+    methods: [PUT]
+
+brix_admin_block_add_block:
+    path:     /brixadmin/block/{id}/subblock/add
+    defaults: { _controller: BrixAdminBundle:Block:addBlock }
     methods: [PUT]
 
 

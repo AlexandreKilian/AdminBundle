@@ -22,6 +22,10 @@ angular.module('brixServices')
         url: window.brix.routing.block_add_widget,
         method: 'PUT'
       },
+      addBlock: {
+          url: window.brix.routing.block_add_block,
+          method: 'PUT'
+      },
       set: {
         method: 'POST'
       },

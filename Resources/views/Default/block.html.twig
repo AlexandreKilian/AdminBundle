@@ -24,14 +24,7 @@
   </li>
 </ul></div>
 <blockelement element="child" ng-model="block" ng-click="blockElementOptions($index)"></blockelement></span>
-<div class="dropdown" ng-hide="editMode || previewMode">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu{{id}}" data-toggle="dropdown">
-    Add Widget
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu{{id}}">
-    <li role="presentation"ng-repeat="type in widgetTypes"><a role="menuitem" tabindex="-1" ng-click="addWidget(type.id)">{{type.name}}</a></li>
-  </ul>
-</div>
+<div class="btn btn-success clearfix" ng-hide="previewMode || editMode" ng-click="addElement()">Add Element</div>
+
 </span>
 {% endverbatim %}

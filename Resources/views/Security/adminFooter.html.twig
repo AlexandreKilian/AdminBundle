@@ -28,7 +28,10 @@
   window.brix.routing.page_types = '{{path('brix_admin_page_get_types')}}';
   window.brix.routing.block = '{{path('brix_admin_block_get',{id:':id'})}}';
   window.brix.routing.block_types = '{{path('brix_admin_block_get_types',{id:':id'})}}';
+  window.brix.routing.block_template = '{{path('brix_admin_block_get_template')}}';
+
   window.brix.routing.block_add_widget = '{{path('brix_admin_block_add_widget',{id:':id'})}}';
+  window.brix.routing.block_add_block = '{{path('brix_admin_block_add_block',{id:':id'})}}';
   window.brix.routing.block_remove_widget = '{{path('brix_admin_block_remove_widget',{id:':id'})}}'
   window.brix.routing.entity = '{{path('brix_admin_widget_get_entity',{id:':id'})}}';
   window.brix.routing.template = '{{path('brix_admin_widget_template_get')}}';
@@ -60,6 +63,10 @@
     {% include 'BrixAdminBundle:Page:pageSettingsModal.html.twig' %}
     </script>
 
+    <script type="text/ng-template" id="blockModal.html">
+    {% include 'BrixAdminBundle:Page:blockModal.html.twig' %}
+    </script>
+
     <script type="text/ng-template" id="mediaGalleryModal.html">
     {% include 'BrixAdminBundle:Media:mediaGalleryModal.html.twig' %}
     </script>
@@ -86,4 +93,7 @@
 
     <script type="text/ng-template" id="block.html">
     {% include 'BrixAdminBundle:Default:block.html.twig' %}
+    </script>
+    <script type="text/ng-template" id="childblock.html">
+    {% include 'BrixAdminBundle:Default:childblock.html.twig' %}
     </script>

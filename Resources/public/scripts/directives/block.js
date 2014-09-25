@@ -21,7 +21,7 @@ angular.module('angularApp').directive('block', function(){
       replace: true,
       controller: 'BlockCtrl',
       scope: { blockid:"@"},
-      template: '<ng><ng ng-repeat="child in block.children"><widget widgetid="{{child.id}}" typeid="{{child.type.id}}" ></widget></ng></ng>',
+      templateUrl: 'childblock.html',
       link: function(scope, element, attrs, blockCtrl) {
         scope.id = attrs.blockid;
       }
