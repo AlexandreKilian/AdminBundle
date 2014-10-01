@@ -45,7 +45,7 @@ class SecurityController extends Controller
 * @Template
 */
 public function adminFooterAction(){
-  if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+  if (!$this->isAdminMode()) {
     return new Response();
   } else{
     return array();
@@ -56,11 +56,21 @@ public function adminFooterAction(){
 * @Template
 */
 public function adminHeaderAction(){
-  if (false === $this->get('security.context')->isGranted('ROLE_ADMIN')) {
+  if (!$this->isAdminMode()) {
     return new Response();
   } else{
     return array();
   }
+}
+
+
+private function isAdminMode(){
+    $session = $this->getRequest()->getSession();
+
+    $admin = $this->get('security.context')->isGranted('ROLE_ADMIN');
+    $adminsession = $session->get('adminmode',false);
+
+    return ($admin && $adminsession);
 }
 
 
