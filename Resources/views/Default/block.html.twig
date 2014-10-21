@@ -1,5 +1,5 @@
 {% verbatim %}
-<span ng-class="{blockcontainer:!editMode,preview:previewMode}">
+<span ng-class="{blockcontainer:!editMode}">
   <span ng-hide="editMode" class="blocklabel">{{block.name}}</span>
   <span class="blockelementwrapper" ng-repeat="child in block.children track by child.id" context-menu data-target="menu-{{$index}}">
     <div class="dropdown position-fixed" id="menu-{{ $index }}">
