@@ -14,7 +14,7 @@ angular.module('angularApp')
     $scope.widgetid;
     $scope.widget = {};
     $scope.editMode = false;
-    $scope.previewMode = true;
+    $scope.previewMode = false;
 
     //Internal Functions
 

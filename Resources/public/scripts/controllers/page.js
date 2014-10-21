@@ -16,7 +16,7 @@ angular.module('angularApp')
     $scope.element = {};
 
     $scope.editMode = false;
-    $scope.previewMode = true;
+    $scope.previewMode = false;
 
     $scope.showElementOptions = false;
 
