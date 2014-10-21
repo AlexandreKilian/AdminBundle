@@ -12,6 +12,7 @@ angular.module('angularApp')
 .controller('blockElementCtrl',function($scope, $modalInstance,Block,block,element,isNew) {
 
     $scope.childTypes = ["widget","block"];
+    $scope.childType = 'widget';
 
     var init = function(){
         Block.getTypes({id:block.id}).$promise.then(function(types){
