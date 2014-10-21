@@ -5,7 +5,7 @@
     {# <li class="pull-left" ng-click="contentManager()"><a class="document" title="Content"></a></li> #}
     <!-- <li class="pull-left"><a class="schedule" title="schedule"></a></li> -->
     <li class="pull-left" ng-hide="new" ng-click="pageOptions()"><a class="edit" title="edit"></a></li>    <li class="pull-left" ng-click="newPageOptions()"><a class="add" title="Add"></a></li>
-    {% if admin %}<li class="highlight pull-right" ng-hide="editMode" ng-click="toggleEdit()"><a class="text-icon edit">Edit</a></li><{% endif %}
+    {% if admin %}<li class="highlight pull-right" ng-hide="editMode" ng-click="toggleEdit()"><a class="text-icon edit">Edit</a></li>{% endif %}
     <li class="highlight pull-right" ng-click="save()" ng-show="editMode"><a class=" text-icon save">Publish</a></li>
     <li class="pull-right" ng-click="reset()" ng-show="editMode"><a class="text-icon cancel">Cancel</a></li>
     <li class="pull-right"><a class="preview{% if not admin %} active{%endif%}" href="?adminmode={% if admin %}false{% else %}true{% endif %}"  title="Preview"></a></li>
