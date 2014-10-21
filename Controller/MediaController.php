@@ -49,7 +49,7 @@ class MediaController extends Controller
       foreach($request->files as $file){
         $media = new Media();
         $media->setSource(sha1(md5(time())) .'.'. $file->guessExtension());
-        if($savedFile = $file->move($media->getUploadRootDir(),$media->getSource())){
+        if($savedFile = $file->move($this->get('kernel')->getRootDir() . '/../web'.$media->getUploadDir(),$media->getSource())){
           $em->persist($media);
           $medias[] = $media;
         }
