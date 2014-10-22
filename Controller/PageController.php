@@ -120,6 +120,8 @@ class PageController extends Controller
             $em->persist($page);
             $em->flush();
 
+
+
             $data = $serializer->serialize($page,'json');
 
         } else{
