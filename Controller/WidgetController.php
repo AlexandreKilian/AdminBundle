@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+use JMS\Serializer\SerializationContext;
+
 use Brix\CoreBundle\Entity\Widget;
 use Brix\CoreBundle\Forms\WidgetForm;
 
@@ -92,7 +94,42 @@ class WidgetController extends Controller
   }
 
 
-  public function setEntityAction($id, Request $request){
+  public function getEntitiesAction($type){
+
+    $em = $this->getDoctrine()->getManager();
+    $serializer = $this->get('jms_serializer');
+    if($widgetType = $em->getRepository("BrixCoreBundle:WidgetType")->find($type)){
+        $entities = $em->getRepository($widgetType->getModel())->findAll();
+        $data = $serializer->serialize($entities,'json');
+    } else{
+        $data = array();
+    }
+
+    return new Response($data,200, array('Content-Type' => 'application/json'), SerializationContext::create()->setGroups(array('list')));
+  }
+
+    public function setEntityAction($id, $entity, Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+        $serializer = $this->get('jms_serializer');
+
+        $widget = $em->getRepository("BrixCoreBundle:Widget")->find($id);
+        $widgetType = $widget->getType();
+
+        $entityRepository = $em->getRepository($widgetType->getModel());
+
+        if($entity = $entityRepository->find($entity)){
+            $widget->setEntity($entity->getId());
+            $em->persist($widget);
+            $em->flush();
+        }
+
+        $data = array("");
+        $data = $serializer->serialize($data,'json');
+        return new Response($data,200, array('Content-Type' => 'application/json'));
+
+    }
+  public function createEntityAction($id, Request $request){
 
     $em = $this->getDoctrine()->getManager();
 

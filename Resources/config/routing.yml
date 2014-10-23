@@ -87,11 +87,21 @@ brix_admin_widget_get_entity:
     defaults: { _controller: BrixAdminBundle:Widget:getEntity }
     methods: [GET]
 
-brix_admin_widget_set_entity:
+brix_admin_widget_create_entity:
     path:     /brixadmin/widget/{id}/entity
-    defaults: { _controller: BrixAdminBundle:Widget:setEntity }
+    defaults: { _controller: BrixAdminBundle:Widget:createEntity }
     methods: [POST]
 
+
+brix_admin_widget_type_get_entities:
+    path:     /brixadmin/widget/{type}/entities
+    defaults: { _controller: BrixAdminBundle:Widget:getEntities }
+    methods: [GET]
+
+brix_admin_widget_set_entity:
+    path:     /brixadmin/widget/{id}/set/{entity}
+    defaults: { _controller: BrixAdminBundle:Widget:setEntity }
+    methods: [POST]
 
 brix_admin_widget_get:
     path:     /brixadmin/widget/{id}

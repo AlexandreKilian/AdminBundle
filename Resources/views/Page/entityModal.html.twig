@@ -1,0 +1,21 @@
+{% verbatim %}
+<div class="modal-header">
+    <h3 class="modal-title">Entity</h3>
+</div>
+<div class="modal-body">
+    <form role="form">
+
+        <div class="form-group">
+            <label>Entity</label>
+            <select ng-model="$parent.entity" class="form-control" ng-options="entity.name for entity in entities">
+            </select>
+        </div>
+
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>
+{% endverbatim %}

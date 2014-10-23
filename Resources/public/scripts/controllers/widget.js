@@ -34,6 +34,26 @@ angular.module('angularApp')
         $scope.widget = entity;
     };
 
+    $scope.selectModel = function(){
+
+        var type = $scope.typeid;
+
+        var modalInstance = $modal.open({
+            templateUrl: 'entityModal.html',
+            controller: 'entitySelect',
+            resolve: {
+
+                type: function(){
+                    return type;
+                }
+            }
+
+        });
+        modalInstance.result.then(function (entity) {
+          Entity.setEntity({id:$scope.widgetid,entity:entity.id},null);
+        });
+    }
+
 
     $scope.onFileSelect = function($files,field) {
         for (var i = 0; i < $files.length; i++) {
