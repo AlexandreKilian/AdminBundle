@@ -18,7 +18,7 @@ class WidgetController extends Controller
 
     $em = $this->getDoctrine()->getManager();
     if($widget = $em->getRepository("BrixCoreBundle:WidgetType")->find($id)){
-      return $this->render($widget->getTemplate(),array('widget'=>null,'entity'=>null));
+      return $this->render($widget->getTemplate(),array('widget'=>null,'entity'=>null,'admin'=>true));
     }
     return new Response("",404, array('Content-Type' => 'application/json'));
   }
