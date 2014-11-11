@@ -95,7 +95,7 @@ angular.module('angularApp')
     $scope.saveEntity = function(){
         var entity = {};
         for(var i in $scope.widget){
-            if(i == "id")continue;//Don't send the ID, It's not part of the Form
+            if(i == "id" || i == "$resolved")continue;//Don't send the ID, It's not part of the Form
                 if(typeof $scope.widget[i] ==='object'){
                     entity[i] = $scope.widget[i].id;
                     continue;
