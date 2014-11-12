@@ -38,8 +38,8 @@ angular.module('angularApp')
     }
 
 
-    $scope.selectMedia = function($index){
-        $modalInstance.close($scope.media[$index]);
+    $scope.selectMedia = function(media){
+        $modalInstance.close(media);
     }
 
     $scope.nextPage = function(){

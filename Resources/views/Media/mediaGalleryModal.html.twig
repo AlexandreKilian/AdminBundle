@@ -10,7 +10,7 @@
     Or select from one of these:
     <div class="bx-media-gallery clearfix">
         <div class="bx-media-element" ng-repeat="image in media | orderBy:image.id:reverse">
-            <img ng-src="{{image.url}}" ng-click="selectMedia($index)">
+            <img ng-src="{{image.url}}" ng-click="selectMedia(image)">
         </div>
 
     </div>

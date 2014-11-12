@@ -11,7 +11,7 @@
 angular.module('angularApp')
 .controller('entitySelect',function($scope, $modalInstance,Entity,type) {
 
-    $scope.entity = {};
+    $scope.data = {entity: undefined};
 
     var init = function(){
         $scope.entities = Entity.getEntities({type:type});
@@ -20,7 +20,7 @@ angular.module('angularApp')
 
 
   $scope.ok = function () {
-      $modalInstance.close($scope.entity);
+      $modalInstance.close($scope.data.entity);
 
   };
 
